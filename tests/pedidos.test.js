@@ -159,6 +159,28 @@ describe('PATCH /pedidos/:id/status', () => {
     const res = await request(app).patch('/pedidos/1/status').send({ status: 'cancelado' });
     expect(res.status).toBe(400);
   });
+  
+  test('não permite alterar pedido já entregue', async () => {
+    await request(app)
+      .patch('/pedidos/1/status')
+      .send({ status: 'em_preparacao' });
+
+    await request(app)
+      .patch('/pedidos/1/status')
+      .send({ status: 'enviado' });
+
+    await request(app)
+      .patch('/pedidos/1/status')
+      .send({ status: 'entregue' });
+
+    const res = await request(app)
+      .patch('/pedidos/1/status')
+      .send({ status: 'cancelado' });
+
+    expect(res.status).toBe(400);
+    expect(res.body.erro).toMatch(/estado final/);
+  });
+
 
   test('retorna 404 para id inexistente', async () => {
     const res = await request(app).patch('/pedidos/999/status').send({ status: 'cancelado' });
