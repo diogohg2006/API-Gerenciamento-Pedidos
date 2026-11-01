@@ -250,7 +250,7 @@ Time:        7.26 s
 Ran all test suites.
 ```
 
-Foram aprovados os 30 testes automatizados existentes.
+Foram aprovados os 33 testes automatizados existentes.
 
 Conforme a documentação do projeto, os cenários cobrem cadastro, validações de entrada, listagem, consulta, identificadores inválidos, atualização de status, transições proibidas e tratamento de erros HTTP.
 
