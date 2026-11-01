@@ -188,6 +188,19 @@ describe('PATCH /pedidos/:id/status', () => {
   });
 });
 
+
+describe('Validação de identificadores no PATCH', () => {
+  test('retorna 400 para identificador não numérico', async () => {
+    const res = await request(app)
+      .patch('/pedidos/abc/status')
+      .send({ status: 'em_preparacao' });
+
+    expect(res.status).toBe(400);
+    expect(res.body.erro).toMatch(/identificador/);
+  });
+});
+
+
 describe('Erros gerais', () => {
   test('rota inexistente retorna 404 em JSON', async () => {
     const res = await request(app).get('/qualquer-coisa');
