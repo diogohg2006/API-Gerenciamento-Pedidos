@@ -14,6 +14,18 @@ beforeEach(() => {
 });
 
 describe('POST /pedidos', () => {
+  
+  test('aceita pedidos com prioridade urgente', async () => {
+    const res = await request(app)
+      .post('/pedidos')
+      .send({ ...pedidoValido, prioridade: 'urgente' });
+
+    expect(res.status).toBe(201);
+    expect(res.body.prioridade).toBe('urgente');
+    expect(res.body.status).toBe('recebido');
+  });
+
+
   test('cria pedido válido com 201 e status "recebido"', async () => {
     const res = await request(app).post('/pedidos').send(pedidoValido);
     expect(res.status).toBe(201);
